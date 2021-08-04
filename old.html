@@ -1,0 +1,571 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style> @media (max-width: 1000px) {
+    .docmain {
+        display: block !important;
+    }
+
+    .docpblock {
+        min-width: 300px !important;
+        background: antiquewhite;
+        padding: 10px !important;
+        margin-right: 0px !important;
+    }
+
+    .docdoc {
+        max-width: 700px !important;
+        line-height: 30px !important;
+        padding: 15px !important;
+        margin-top: 30px !important;
+    }
+}
+
+.docdoc {
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.05);
+    padding: 50px;
+}
+
+#btn-export {
+    margin: 0 auto;
+    background: #d14a34 !important;
+    width: 250px !important;
+    border: 0px;
+    height: 50px;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+body {
+    font-family: "IBM Plex Sans", Arial, sans-serif;
+}
+
+.vydel {
+
+}
+
+.pole {
+    width: auto;
+    resize: vertical;
+    padding: 15px;
+    border-radius: 3px;
+    border: 0;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.02);
+    height: 40px;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+
+textarea {
+    width: 100%;
+    resize: vertical;
+    padding: 15px;
+    border-radius: 3px;
+    border: 0;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.02);
+    height: 150px;
+    font-size: 13px;
+}
+
+.mirovoi {
+    display: block;
+
+}
+
+.arbitrazh {
+    display: none;
+
+}
+
+.eshe {
+    display: none;
+
+}
+
+/* */
+
+.docmain {
+    display: flex;
+    margin: 0 auto;
+    max-width: 1300px;
+}
+
+.docpblock {
+    min-width: 350px;
+    background: #f2f4f8;
+    padding: 20px;
+    margin-right: 2%;
+    color: #fff;
+}
+
+.docpolya {
+    display: grid;
+    margin-bottom: 20px;
+    line-height: 30px;
+    color: #000;
+    font-weight: 300;
+}
+
+/* Переменные */
+.otvetchik {
+    display: inline-block;
+}
+
+.nomer {
+    display: inline-block;
+}
+
+.add {
+    width: 75px;
+    height: 75px;
+    line-height: 75px;
+    text-align: center;
+    border: 1px dashed grey;
+    margin: 10px 0;
+}
+
+.add:hover {
+    cursor: pointer;
+    background-color: #360581;
+}
+
+
+.content-footer {
+    margin-top: 30px;
+    display: flex;
+}
+
+.box {
+    display: inline;
+}
+</style>
+<link rel='stylesheet' id='google-fonts-css'
+      href='//fonts.googleapis.com/css?family=IBM+Plex+Sans:300,300i,400,700&#038;display=swap&#038;subset=cyrillic' type='text/css'
+      media='all'/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/suggestions-jquery@21.6.0/dist/css/suggestions.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/suggestions-jquery@21.6.0/dist/js/jquery.suggestions.min.js"></script>
+
+<h1 style="margin: 0 auto;text-align: center;margin-bottom: 30px;margin-top: 30px;">Конструктор искового зявления по алиментам</h1>
+
+<div class="docmain">
+
+    <div class="docpblock">
+        <div class="docpolya">Куда подается заявление:
+            <label><input type="radio" name="podsudnost" value="green" checked="checked">Районный суд</label>
+            <div class="green box"><input id="gorodray" name="gorodray" class="pole" type="text" placeholder="Укажите город"
+                                          style="margin-top: 10px;"></div>
+
+            <label><input type="radio" name="podsudnost" value="red">Городской суд</label>
+            <div class="red box"><input id="gorodgor" name="gorodgor" class="pole" type="text" placeholder="Укажите город"
+                                        style="margin-top: 10px;"></div>
+
+        </div>
+
+        <div class="docpolya">ФИО истца
+            <input id="fioistca" cols="30" rows="2" class="pole" placeholder="Укажите ФИО истца">
+        </div>
+
+        <div class="docpolya">Место жительства истца
+            <input id="istec_address" name="istec_address" class="pole" type="text" placeholder="Укажите адрес"/>
+        </div>
+
+        <div class="docpolya">ФИО ответчика
+            <input id="fiootvetchika" cols="30" rows="2" class="pole" placeholder="Укажите ФИО истца">
+        </div>
+
+        <div class="docpolya">Место жительства ответчика
+            <input id="otvetchik_address" name="otvetchik_address" class="pole" type="text" placeholder="Укажите адрес"/>
+        </div>
+
+        <div class="docpolya">Даты заключения и расторжения брака
+            <input type="data" name="data_zaklyucheniya" id="data_zaklyucheniya" class="pole" onfocus="(this.type='date')"
+                   onblur="(this.type='text')" placeholder="Укажите дату заключения брака"> <input type="data" name="data_rastorzheniya"
+                                                                                                   id="data_rastorzheniya" class="pole"
+                                                                                                   onfocus="(this.type='date')"
+                                                                                                   onblur="(this.type='text')"
+                                                                                                   placeholder="Укажите дату заключения брака">
+
+        </div>
+
+        <div class="docpolya">На сколько детей взыскать алименты
+            <label><input type="radio" name="kolichestvodetey" value="odin" checked="checked">Один ребенок</label>
+            <div class="odin box"><input id="rebenok" type="text" placeholder="ФИО ребенка" class="pole"> <input id="data_rebenka"
+                                                                                                                 type="text"
+                                                                                                                 placeholder="Дата рождения ребенка"
+                                                                                                                 onfocus="(this.type='date')"
+                                                                                                                 onblur="(this.type='text')"
+                                                                                                                 class="pole"></div>
+
+            <label><input type="radio" name="kolichestvodetey" value="dva">Двое детей</label>
+            <div class="dva box"><input id="rebenok" type="text" placeholder="ФИО ребенка" class="pole"> <input id="data_rebenka"
+                                                                                                                type="text"
+                                                                                                                placeholder="Дата рождения ребенка"
+                                                                                                                onfocus="(this.type='date')"
+                                                                                                                onblur="(this.type='text')"
+                                                                                                                class="pole">
+                <input id="rebenokdva" type="text" placeholder="ФИО ребенка" class="pole"> <input id="data_rebenkadva" type="text"
+                                                                                                  placeholder="Дата рождения ребенка"
+                                                                                                  onfocus="(this.type='date')"
+                                                                                                  onblur="(this.type='text')" class="pole">
+            </div>
+
+            <label><input type="radio" name="kolichestvodetey" value="tri">Трое детей</label>
+            <div class="tri box"><input id="rebenok" type="text" placeholder="ФИО ребенка" class="pole"> <input id="data_rebenka"
+                                                                                                                type="text"
+                                                                                                                placeholder="Дата рождения ребенка"
+                                                                                                                onfocus="(this.type='date')"
+                                                                                                                onblur="(this.type='text')"
+                                                                                                                class="pole"><input
+                    id="rebenokdva" type="text" placeholder="ФИО ребенка" class="pole"> <input id="data_rebenkadva" type="text"
+                                                                                               placeholder="Дата рождения ребенка"
+                                                                                               onfocus="(this.type='date')"
+                                                                                               onblur="(this.type='text')" class="pole">
+                <input id="rebenoktri" type="text" placeholder="ФИО ребенка" class="pole"> <input id="data_rebenkatri" type="text"
+                                                                                                  placeholder="Дата рождения ребенка"
+                                                                                                  onfocus="(this.type='date')"
+                                                                                                  onblur="(this.type='text')" class="pole">
+            </div>
+        </div>
+
+
+        <div class="docpolya">С какой даты ответчик не учавствует в содержании детей
+
+        </div>
+
+        <div class="docpolya">Обращался ли истец к ответчику с просьбой выделять деньги на детей
+
+        </div>
+
+        <div class="docpolya">В какой форме взыскиваются алименты
+
+        </div>
+
+        <div class="docpolya">С какого периода взыскать алименты
+
+        </div>
+
+        <div class="docpolya">Приложение к иску
+
+        </div>
+
+        <div class="docpolya">Дата составления заявления
+
+        </div>
+
+
+    </div>
+
+    <div class="docdoc">
+        <form id="source-html">
+            <style>
+
+
+                .docdoc {
+                    max-width: 700px;
+                    line-height: 30px;
+                }
+
+                .docdoc-shapka {
+                    text-align: right;
+                }
+
+                .docdoc-telo {
+                    text-align: left;
+                }
+
+                .docdoc-telo-zag {
+                    display: grid;
+                    text-align: center;
+                    font-weight: bold;
+                    line-height: 22px;
+                    padding-bottom: 16px;
+                }
+
+                .min {
+                    font-size: 12px;
+                    line-height: 5px;
+                    padding-bottom: 15px;
+                    color: #636363;
+                }
+
+
+            </style>
+            <div class="docdoc-shapka">
+                <div>
+                    <div>
+                        <div class="green box">Районый суд города <span class="gorodray vydel">[город]</span></div>
+                        <div class="red box">Городской суд города <span class="gorodgor vydel">[город]</span></div>
+                    </div>
+                    <div>Истец: <span class="fioistca">[Ф.И.О. истца]</span></div>
+                    <div><span class="istec_address vydel">[его место жительства]</span></div>
+                    <div>Ответчик: <span class="fiootvetchika">[Ф.И.О. ответчика]</span></div>
+                    <div><span class="otvetchik_address vydel">[его место жительства]</span></div>
+                </div>
+
+                <div class="docdoc-telo">
+                    <div class="docdoc-telo-zag">
+                        <div>ИСКОВОЕ ЗАЯВЛЕНИЕ</div>
+                        <div>о взыскании алиментов на несовершеннолетних детей</div>
+                    </div>
+
+
+                    С <span class="data_zaklyucheniya vydel">[число, месяц, год]</span> по <span class="data_rastorzheniya vydel">[число, месяц, год]</span>
+                    я состояла в браке с <span class="fiootvetchika">[Ф.И.О. ответчика]</span>.
+                    В браке у нас родились дети -
+                    <div class="odin box"><span class="rebenok vydel">[Ф.И.О.]</span> <span class="data_rebenka vydel">[значение]</span>
+                        года рождения.
+                    </div>
+                    <div class="dva box"><span class="rebenok vydel">[Ф.И.О.]</span> <span class="data_rebenka vydel">[значение]</span> года
+                        рождения, <span class="rebenokdva vydel">[Ф.И.О.]</span> <span class="data_rebenkadva vydel">[значение]</span> года
+                        рождения.
+                    </div>
+                    <div class="tri box"><span class="rebenok vydel">[Ф.И.О.]</span> <span class="data_rebenka vydel">[значение]</span> года
+                        рождения, <span class="rebenokdva vydel">[Ф.И.О.]</span> <span class="data_rebenkadva vydel">[значение]</span> года
+                        рождения, <span class="rebenoktri vydel">[Ф.И.О.]</span> <span class="data_rebenkatri vydel">[значение]</span> года
+                        рождения.
+                    </div>
+                    С [месяц] 20[значение] года ответчик не предоставляет содержания нашим детям, которые находятся полностью на моем
+                    иждивении.
+                    До обращения в суд я неоднократно обращалась к ответчику с просьбой выделять средства на содержание наших детей, но он
+                    уклонялся от их уплаты.
+                    На основании изложенного и руководствуясь ст. 80, 81, 106, 107 Семейного кодекса РФ, прошу:
+                    Взыскать с <span class="fiootvetchika">[Ф.И.О. ответчика]</span> в мою пользу алименты на содержание двух
+                    несовершеннолетних детей в размере одной трети заработка и иного дохода ответчика, в том числе и за прошедший период
+                    начиная с [значение] года.
+
+                    Приложение:
+
+
+                    Дата подачи заявления: "___"_____________ г. [Подпись истца или его представителя]
+                </div>
+        </form>
+    </div>
+
+</div>
+</div>
+
+<div class="content-footer">
+    <button id="btn-export" onclick="exportHTML();">Сохранить в Word</button>
+</div>
+
+
+<script>
+    function exportHTML() {
+        var header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
+            "xmlns:w='urn:schemas-microsoft-com:office:word' " +
+            "xmlns='http://www.w3.org/TR/REC-html40'>" +
+            "<head><meta charset='utf-8'><title>Export HTML to Word Document with JavaScript</title></head><body>";
+        var footer = "</body></html>";
+        var sourceHTML = header + document.getElementById("source-html").innerHTML + footer;
+
+        var source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+        var fileDownload = document.createElement("a");
+        document.body.appendChild(fileDownload);
+        fileDownload.href = source;
+        fileDownload.download = 'document.doc';
+        fileDownload.click();
+        document.body.removeChild(fileDownload);
+    }
+</script>
+
+
+<script>
+    // Вывод значения из появляющегося поля
+    let gorod_raysuda = document.querySelector('#gorodray'); // Инициализировал и присвоил переменной элемент textarea 
+    gorod_raysuda.addEventListener('change', () => { // Повесил на него событие через addEventListener, событие change. () => Это стрелочная фунция
+        let gorodray = document.getElementsByClassName("gorodray");
+        for (let i = 0; i < gorodray.length; i++) {
+            gorodray[i].innerHTML = gorod_raysuda.value;
+        }
+
+
+    });
+
+    // Вывод значения из появляющегося поля
+    let gorod_gorsuda = document.querySelector('#gorodgor'); // Инициализировал и присвоил переменной элемент textarea 
+    gorod_gorsuda.addEventListener('change', () => { // Повесил на него событие через addEventListener, событие change. () => Это стрелочная фунция
+        let gorodgor = document.getElementsByClassName("gorodgor");
+        for (let i = 0; i < gorodgor.length; i++) {
+            gorodgor[i].innerHTML = gorod_gorsuda.value;
+        }
+
+
+    });
+
+    // Радиобоксы с выбором и выводом информации
+    $(document).ready(function () {
+        $('input[type="radio"]').click(function () {
+            var inputValue = $(this).attr("value");
+            var targetBox = $("." + inputValue);
+            $(".box").not(targetBox).hide();
+            $(targetBox).show();
+        });
+        $('input[name="podsudnost"]:checked').click();
+    });
+</script>
+
+<script>
+    let display_fioistca = document.querySelector('#fioistca'); // Инициализировал и присвоил переменной элемент textarea 
+    display_fioistca.addEventListener('change', () => { // Повесил на него событие через addEventListener, событие change. () => Это стрелочная фунция
+        let fioistca = document.getElementsByClassName("fioistca");
+        for (let i = 0; i < fioistca.length; i++) {
+            fioistca[i].innerHTML = display_fioistca.value;
+        }
+
+
+    })
+</script>
+<script>
+    // Вывод адреса
+    let display_istec_address = document.querySelector('#istec_address'); // Инициализировал и присвоил переменной элемент textarea
+    display_istec_address.addEventListener('change', () => { // Повесил на него событие через addEventListener, событие change. () => Это стрелочная фунция
+        let istec_address = document.getElementsByClassName("istec_address");
+        for (let i = 0; i < istec_address.length; i++) {
+            istec_address[i].innerHTML = display_istec_address.value;
+        }
+
+    });
+
+    // Подключение сервиса подсказок
+    $("#istec_address").suggestions({
+        token: "9c5c260fedc29026cb904160a9cde34579b58432",
+        type: "ADDRESS",
+        /* Вызывается, когда пользователь выбирает одну из подсказок */
+        onSelect: function (suggestion) {
+            console.log(suggestion);
+        }
+    });
+</script>
+
+<script>
+    let display_otvetchika = document.querySelector('#fiootvetchika'); // Инициализировал и присвоил переменной элемент textarea 
+    display_otvetchika.addEventListener('change', () => { // Повесил на него событие через addEventListener, событие change. () => Это стрелочная фунция
+        let fiootvetchika = document.getElementsByClassName("fiootvetchika");
+        for (let i = 0; i < fiootvetchika.length; i++) {
+            fiootvetchika[i].innerHTML = display_otvetchika.value;
+        }
+
+
+    })
+</script>
+
+<script>
+    // Вывод адреса
+    let display_otvetchik_address = document.querySelector('#otvetchik_address'); // Инициализировал и присвоил переменной элемент textarea
+    display_otvetchik_address.addEventListener('change', () => { // Повесил на него событие через addEventListener, событие change. () => Это стрелочная фунция
+        let otvetchik_address = document.getElementsByClassName("otvetchik_address");
+        for (let i = 0; i < otvetchik_address.length; i++) {
+            otvetchik_address[i].innerHTML = display_otvetchik_address.value;
+        }
+
+    });
+
+    // Подключение сервиса подсказок
+    $("#otvetchik_address").suggestions({
+        token: "9c5c260fedc29026cb904160a9cde34579b58432",
+        type: "ADDRESS",
+        /* Вызывается, когда пользователь выбирает одну из подсказок */
+        onSelect: function (suggestion) {
+            console.log(suggestion);
+        }
+    });
+</script>
+
+<script>
+    let display_data_zaklyucheniya = document.querySelector('#data_zaklyucheniya'); // Инициализировал и присвоил переменной элемент textarea
+    display_data_zaklyucheniya.addEventListener('change', () => { // Повесил на него событие через addEventListener, событие change. () => Это стрелочная фунция
+        let data_zaklyucheniya = document.getElementsByClassName("data_zaklyucheniya");
+        for (let i = 0; i < data_zaklyucheniya.length; i++) {
+            data_zaklyucheniya[i].innerHTML = display_data_zaklyucheniya.value;
+        }
+
+
+    });
+</script>
+
+<script>
+    let display_data_rastorzheniya = document.querySelector('#data_rastorzheniya'); // Инициализировал и присвоил переменной элемент textarea
+    display_data_rastorzheniya.addEventListener('change', () => { // Повесил на него событие через addEventListener, событие change. () => Это стрелочная фунция
+        let data_rastorzheniya = document.getElementsByClassName("data_rastorzheniya");
+        for (let i = 0; i < data_rastorzheniya.length; i++) {
+            data_rastorzheniya[i].innerHTML = display_data_rastorzheniya.value;
+        }
+
+
+    });
+</script>
+
+<script>
+    let display_rebenok = document.querySelector('#rebenok'); // Инициализировал и присвоил переменной элемент textarea
+    display_rebenok.addEventListener('change', () => { // Повесил на него событие через addEventListener, событие change. () => Это стрелочная фунция
+        let rebenok = document.getElementsByClassName("rebenok");
+        for (let i = 0; i < rebenok.length; i++) {
+            rebenok[i].innerHTML = display_rebenok.value;
+        }
+
+    });
+
+
+    let display_data_rebenka = document.querySelector('#data_rebenka'); // Инициализировал и присвоил переменной элемент textarea
+    display_data_rebenka.addEventListener('change', () => { // Повесил на него событие через addEventListener, событие change. () => Это стрелочная фунция
+        let data_rebenka = document.getElementsByClassName("data_rebenka");
+        for (let i = 0; i < data_rebenka.length; i++) {
+            data_rebenka[i].innerHTML = display_data_rebenka.value;
+        }
+
+
+    });
+
+    let display_rebenokdva = document.querySelector('#rebenokdva'); // Инициализировал и присвоил переменной элемент textarea
+    display_rebenokdva.addEventListener('change', () => { // Повесил на него событие через addEventListener, событие change. () => Это стрелочная фунция
+        let rebenokdva = document.getElementsByClassName("rebenokdva");
+        for (let i = 0; i < rebenokdva.length; i++) {
+            rebenokdva[i].innerHTML = display_rebenokdva.value;
+        }
+
+    });
+
+
+    let display_data_rebenkadva = document.querySelector('#data_rebenkadva'); // Инициализировал и присвоил переменной элемент textarea
+    display_data_rebenkadva.addEventListener('change', () => { // Повесил на него событие через addEventListener, событие change. () => Это стрелочная фунция
+        let data_rebenkadva = document.getElementsByClassName("data_rebenkadva");
+        for (let i = 0; i < data_rebenkadva.length; i++) {
+            data_rebenkadva[i].innerHTML = display_data_rebenkadva.value;
+        }
+
+
+    });
+
+    let display_rebenoktri = document.querySelector('#rebenoktri'); // Инициализировал и присвоил переменной элемент textarea
+    display_rebenoktri.addEventListener('change', () => { // Повесил на него событие через addEventListener, событие change. () => Это стрелочная фунция
+        let rebenoktri = document.getElementsByClassName("rebenoktri");
+        for (let i = 0; i < rebenoktri.length; i++) {
+            rebenoktri[i].innerHTML = display_rebenoktri.value;
+        }
+
+    });
+
+
+    let display_data_rebenkatri = document.querySelector('#data_rebenkatri'); // Инициализировал и присвоил переменной элемент textarea
+    display_data_rebenkatri.addEventListener('change', () => { // Повесил на него событие через addEventListener, событие change. () => Это стрелочная фунция
+        let data_rebenkatri = document.getElementsByClassName("data_rebenkatri");
+        for (let i = 0; i < data_rebenkatri.length; i++) {
+            data_rebenkatri[i].innerHTML = display_data_rebenkatri.value;
+        }
+
+
+    });
+
+    // Радиобоксы с выбором и выводом информации
+    $(document).ready(function () {
+        $('input[type="radio"]').click(function () {
+            var inputValue = $(this).attr("value");
+            var targetBox = $("." + inputValue);
+            $(".box").not(targetBox).hide();
+            $(targetBox).show();
+        });
+        $('input[name="kolichestvodetey"]:checked').click();
+    });
+</script>
+
