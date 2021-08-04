@@ -44,7 +44,6 @@
 
             formatDate: function (dateToFormat) {
                 let date = new Date(Date.parse(dateToFormat));
-                console.log(date.toLocaleString());
                 return date.toLocaleString("ru", {
                     year: 'numeric',
                     month: 'long',
@@ -209,13 +208,40 @@
                         <span x-text="defendantFIO ? defendantFIO : '[Ф.И.О. ответчика]'"></span>.
 
                         В браке у нас родились дети -
-                        <span x-show="!kids.length">
-                            [Список детей: Ф.И.О и дата рождения]
-                        </span>
-                        <template x-for="children in kids">
-                            [Ф.И.О ребенка и дата рождения]
+                        <template x-if="kids.length === 0">
+                            <span>[Список детей: Ф.И.О и дата рождения]</span>
                         </template>
+                        <template x-for="(children, index) in kids">
+                            <span>
+                                <span x-text="children.name ? children.name : '[Ф.И.О ребенка]'"></span>
+                                <span x-text="children.birthDate ? formatDate(children.birthDate) : '[дата рождения ребенка]'"></span>
+                                рождения<template x-if="index < (kids.length-1)"><span>,</span></template></span></template>
+                        .
+
+                        С [месяц] 20[значение] года ответчик не предоставляет содержания нашим детям,
+                        которые находятся полностью на моем иждивении.
+
+                        До обращения в суд я неоднократно обращалась к ответчику с просьбой выделять средства на содержание наших детей,
+                        но он уклонялся от их уплаты.
+
+                        На основании изложенного и руководствуясь ст. 80, 81, 106, 107 Семейного кодекса РФ, прошу:
+                        Взыскать с
+                        <span x-text="defendantFIO ? defendantFIO : '[Ф.И.О. ответчика]'"></span>
+                        в мою пользу алименты на содержание двух несовершеннолетних детей в размере одной трети заработка и иного дохода
+                        ответчика, в том числе и за прошедший период начиная с [значение] года.
                     </p>
+
+                    <p>
+                        Приложение:
+                    </p>
+
+                    <p class="text-end">
+                        Дата подачи заявления: "___"_____________ г.
+                    </p>
+                    <p class="text-end">
+                        [Подпись истца или его представителя]
+                    </p>
+
                 </div>
 
             </div>
