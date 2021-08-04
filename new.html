@@ -17,6 +17,8 @@
         return {
             courtType: 'Городской',
             cityName: '',
+            plaintiffFIO: '',
+            plaintiffResidence: '',
         };
     }
 </script>
@@ -31,7 +33,7 @@
             <div class="shadow-sm p-3 bg-light bg-gradient">
 
                 <h5>Куда подается заявление:</h5>
-                <div class="mb-3">
+                <div class="mt-3">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="courtType" id="cityCourt"
                                x-model="courtType" value="Городской"
@@ -49,10 +51,24 @@
                         </label>
                     </div>
                 </div>
-                <div class="mb-3">
+                <div class="mt-3">
                     <label for="cityName" class="form-label">Город</label>
                     <input type="text" class="form-control" id="cityName" placeholder="Название города"
                            x-model="cityName">
+                </div>
+
+                <hr>
+
+                <h5>Истец:</h5>
+                <div class="mt-3">
+                    <label for="plaintiffFIO" class="form-label">Ф.И.О.</label>
+                    <input type="text" class="form-control" id="plaintiffFIO" placeholder="Ф.И.О. истца"
+                           x-model="plaintiffFIO">
+                </div>
+                <div class="mt-3">
+                    <label for="plaintiffResidence" class="form-label">Место жительства</label>
+                    <input type="text" class="form-control" id="plaintiffResidence" placeholder="Место жительства истца"
+                           x-model="plaintiffResidence">
                 </div>
 
             </div>
@@ -62,11 +78,19 @@
             <div class="shadow-sm p-3 bg-body">
 
                 <div class="text-end">
+
                     <p>
                         <span x-text="courtType"></span>
                         суд города
                         <span x-text="cityName ? cityName : '[Город]'"></span>
+                    </p>
 
+                    <p>
+                        Истец:
+                        <span x-text="plaintiffFIO ? plaintiffFIO : '[Ф.И.О. истца]'"></span>
+                    </p>
+                    <p>
+                        <span x-text="plaintiffResidence ? plaintiffResidence : '[Место жительства истца]'"></span>
                     </p>
                 </div>
 
